@@ -4,6 +4,7 @@
 #define _PID_MAP(itf, n) ((CFG_TUD_##itf) << (n))
 #define USB_PID           (0x4000 | _PID_MAP(AUDIO, 1))
 
+// Device Descriptor
 tus_desc_device_t const desc_device = {
     .bLength            = sizeof(tus_desc_device_t),
     .bDescriptorType    = TUSB_DESC_DEVICE,
@@ -25,6 +26,36 @@ uint8_t const * tud_descriptor_device_cb(void) {
     return (uint8_t const *) &desc_device;
 }
 
+// Configuration Descriptor Constants
+enum {
+    ITF_NUM_AUDIO_CONTROL = 0,
+    ITF_NUM_AUDIO_STREAMING_SPK,
+    ITF_NUM_AUDIO_STREAMING_MIC,
+    ITF_NUM_TOTAL
+};
+
+#define CONFIG_TOTAL_LEN  (TUD_CONFIG_DESC_LEN + CFG_TUD_AUDIO * (9 + 8 + 8))
+
+uint8_t const desc_fs_configuration[] = {
+    // Config descriptor
+    TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, 0x00, 500),
+
+    // Standard Audio Control (AC) Interface Descriptor (UAC2)
+    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_CONTROL, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_CONTROL, AUDIO_INT_PROTOCOL_CODE_V2, 0x00,
+
+    // Audio Streaming (AS) Out Interface (Alt 0 - Inactive)
+    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_SPK, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_AUDIOSTREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00,
+
+    // Audio Streaming (AS) In Interface (Alt 0 - Inactive)
+    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_MIC, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_AUDIOSTREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00
+};
+
+uint8_t const * tud_descriptor_configuration_cb(uint8_t index) {
+    (void) index;
+    return desc_fs_configuration;
+}
+
+// String Descriptors
 static char const* string_desc_arr [] = {
     (const char[]) { 0x09, 0x04 },
     "Kniajevich DSP",
@@ -51,4 +82,35 @@ uint16_t const* tud_descriptor_string_cb(uint8_t index, uint16_t langid) {
     }
     _desc_str[0] = (uint16_t) ((TUSB_DESC_STRING << 8) | (2*chr_count + 2));
     return _desc_str;
+}
+
+// UAC2 Stack Linker Callbacks & Golden-Ratio Clock Synchronization
+bool tud_audio_set_req_entity_cb(uint8_t rhport, tusb_control_request_t const *p_request, uint8_t *p_buff) {
+    (void) rhport; (void) p_request; (void) p_buff;
+    return true;
+}
+
+bool tud_audio_get_req_entity_cb(uint8_t rhport, tusb_control_request_t const *p_request) {
+    (void) rhport; (void) p_request;
+    return true;
+}
+
+bool tud_audio_set_itf_cb(uint8_t rhport, tusb_control_request_t const *p_request) {
+    (void) rhport; (void) p_request;
+    return true;
+}
+
+bool tud_audio_set_itf_close_cb(uint8_t rhport, tusb_control_request_t const *p_request) {
+    (void) rhport; (void) p_request;
+    return true;
+}
+
+bool tud_audio_rx_done_post_read_cb(uint8_t rhport, uint16_t n_bytes_received, uint8_t func_id, uint8_t ep_out, uint8_t cur_alt_setting) {
+    (void) rhport; (void) n_bytes_received; (void) func_id; (void) ep_out; (void) cur_alt_setting;
+    return true;
+}
+
+bool tud_audio_tx_done_pre_load_cb(uint8_t rhport, uint8_t func_id, uint8_t ep_in, uint8_t cur_alt_setting) {
+    (void) rhport; (void) func_id; (void) ep_in; (void) cur_alt_setting;
+    return true;
 }
