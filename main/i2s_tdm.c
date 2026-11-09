@@ -1,4 +1,5 @@
 #include "i2s_tdm.h"
+#include "freertos/FreeRTOS.h"
 #include "driver/i2s_tdm.h"
 #include "esp_log.h"
 #include "phi_dsp_constants.h"

@@ -4,7 +4,6 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "tinyusb.h"
-#include "tinyusb_default_config.h"
 #include "tusb.h"
 #include "i2s_tdm.h"
 #include "phi_dsp_constants.h"
@@ -19,7 +18,15 @@ void app_main(void) {
     ESP_ERROR_CHECK(p4_i2s_tdm_init());
 
     // 2. Initialize TinyUSB Device Stack via IDF Component
-    tinyusb_config_t const tusb_cfg = TINYUSB_DEFAULT_CONFIG();
+    const tinyusb_config_t tusb_cfg = {
+        .device_descriptor = NULL,
+        .string_descriptor = NULL,
+        .string_descriptor_count = 0,
+        .external_phy = false,
+        .configuration_descriptor = NULL,
+        .self_powered = false,
+        .vbus_monitor_io = -1,
+    };
     ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 
     ESP_LOGI(TAG, "UAC2 High-Speed Audio Subsystem Live & Ready for DAW connection");
