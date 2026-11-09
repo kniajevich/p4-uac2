@@ -5,8 +5,8 @@
 #define USB_PID           (0x4000 | _PID_MAP(AUDIO, 1))
 
 // Device Descriptor
-tus_desc_device_t const desc_device = {
-    .bLength            = sizeof(tus_desc_device_t),
+tusb_desc_device_t const desc_device = {
+    .bLength            = sizeof(tusb_desc_device_t),
     .bDescriptorType    = TUSB_DESC_DEVICE,
     .bcdUSB             = 0x0200,
     .bDeviceClass       = TUSB_CLASS_MISC,
@@ -44,10 +44,10 @@ uint8_t const desc_fs_configuration[] = {
     0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_CONTROL, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_CONTROL, AUDIO_INT_PROTOCOL_CODE_V2, 0x00,
 
     // Audio Streaming (AS) Out Interface (Alt 0 - Inactive)
-    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_SPK, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_AUDIOSTREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00,
+    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_SPK, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_STREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00,
 
     // Audio Streaming (AS) In Interface (Alt 0 - Inactive)
-    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_MIC, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_AUDIOSTREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00
+    0x09, TUSB_DESC_INTERFACE, ITF_NUM_AUDIO_STREAMING_MIC, 0x00, 0x00, TUSB_CLASS_AUDIO, AUDIO_SUBCLASS_STREAMING, AUDIO_INT_PROTOCOL_CODE_V2, 0x00
 };
 
 uint8_t const * tud_descriptor_configuration_cb(uint8_t index) {
