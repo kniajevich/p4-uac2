@@ -19,10 +19,7 @@ void app_main(void) {
     ESP_ERROR_CHECK(p4_i2s_tdm_init());
 
     // 2. Initialize TinyUSB Device Stack via modern v2 Default Configuration
-    tinyusb_config_t tusb_cfg = TINYUSB_DEFAULT_CONFIG();
-#if defined(TUD_OPT_HIGH_SPEED) && TUD_OPT_HIGH_SPEED
-    tusb_cfg.port = TINYUSB_PORT_HIGH_SPEED_0;
-#endif
+    tinyusb_config_t const tusb_cfg = TINYUSB_DEFAULT_CONFIG();
     ESP_ERROR_CHECK(tinyusb_driver_install(&tusb_cfg));
 
     ESP_LOGI(TAG, "UAC2 High-Speed Audio Subsystem Live & Ready for DAW connection");
