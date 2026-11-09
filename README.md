@@ -1,5 +1,9 @@
 # p4-uac2: High-Speed 8x8 USB Audio Class 2.0 for ESP32-P4
 
+[![ESP32-P4 Firmware CI](https://github.com/kniajevich/p4-uac2/actions/workflows/build.yml/badge.svg)](https://github.com/kniajevich/p4-uac2/actions/workflows/build.yml)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![Target: ESP32-P4](https://img.shields.io/badge/Target-ESP32--P4-red.svg)
+
 Professional, low-latency, 8-input / 8-output USB Audio Class 2.0 (UAC2) soundcard firmware designed exclusively for the **ESP32-P4** RISC-V SoC (480 Mbps High-Speed USB PHY + TDM/I2S hardware).
 
 ---
