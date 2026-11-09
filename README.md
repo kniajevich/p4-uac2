@@ -25,6 +25,27 @@ Professional, low-latency, 8-input / 8-output USB Audio Class 2.0 (UAC2) soundca
 
 ---
 
+## Dual Licensing & Commercial Inquiries
+
+This project is distributed under a Dual-Licensing model:
+
+1. **Open Source (GPLv3):** Free for non-commercial use, research, education, Eurorack DIY builds, and open-source projects. In accordance with GNU GPLv3, any derivative firmware or commercial hardware embedding this code must also be published under GPLv3.
+2. **Commercial / Closed-Source License:** If you plan to integrate this high-speed UAC2 audio core into proprietary commercial hardware, DSP audio interfaces, or closed-source firmware, you must acquire a separate commercial license.
+
+For commercial licensing terms, custom DSP adaptations, or hardware consulting, reach out via GitHub: [@kniajevich](https://github.com/kniajevich).
+
+---
+
+## License
+
+This firmware is licensed under the terms of the GNU General Public License v3.0 (GPL-3.0). See the [LICENSE](LICENSE) file for complete details.
+
+Upstream dependencies:
+* TinyUSB stack is Copyright (c) Ha Thach under the MIT License.
+* ESP-IDF framework is Copyright (c) Espressif Systems under Apache License 2.0.
+
+---
+
 ## Support & Sponsorship
 
 If you find this project useful for professional audio hardware, Eurorack modules, or low-latency interfaces, consider sponsoring:
