@@ -11,16 +11,12 @@ jobs:
   build:
     name: Build ESP32-P4 Binary
     runs-on: ubuntu-latest
-    container:
-      image: espressif/idf:release-v5.3
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Compile ESP32-P4 Firmware
+      - name: Compile ESP32-P4 Firmware via Docker
         shell: bash
         run: |
-          git config --global --add safe.directory '*'
-          . /opt/esp/idf/export.sh
-          idf.py set-target esp32p4
-          idf.py build
+          docker run --rm -v ${{ github.workspace }}:/project -w /project espressif/idf:release-v5.3 \
+            bash -c "git config --global --add safe.directory '*' && idf.py set-target esp32p4 && idf.py build"
